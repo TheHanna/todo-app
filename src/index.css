@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@import "tailwindcss-animated";
+
+
+@layer base {
+  input,
+  textarea,
+  select {
+    @apply border border-blue-500 bg-blue-100 p-2 rounded focus:outline-none focus:ring focus:ring-blue-500 text-gray-700 placeholder:text-gray-400;
+  }
+
+  button[type="submit"] {
+    @apply rounded border bg-blue-500 border-blue-700 hover:bg-blue-700 transition-colors p-4 text-white cursor-pointer font-bold focus:outline-none focus:ring focus:ring-blue-700;
+  }
+}
