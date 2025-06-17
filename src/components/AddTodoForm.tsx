@@ -17,9 +17,9 @@ export function AddTodoForm() {
   const { state }: { state: Todo } = useLocation();
   const { register, handleSubmit, reset } = useForm<TodoFormInputs>({
     defaultValues: {
-      title: state?.title || "",
-      notes: state?.notes || "",
-      priority: state?.priority || Priority.LOW,
+      title: state?.title ?? "",
+      notes: state?.notes ?? "",
+      priority: state?.priority ?? Priority.LOW,
     },
   });
   const [editingTodo, setEditingTodo] = useState<Todo | null>(state);
@@ -52,17 +52,26 @@ export function AddTodoForm() {
   };
 
   const addTodo = async (data: TodoFormInputs) => {
-    const id = await db.todos.add({
-      title: data.title,
-      notes: data.notes,
-      priority: data.priority,
-      completed: false,
-    });
-    reset();
-    toast(
-      <TodoSuccessToast message="Todo added successfully" id={id.toString()} />,
-      { type: "success" },
-    );
+    await db.todos
+      .add({
+        title: data.title,
+        notes: data.notes,
+        priority: data.priority,
+        completed: false,
+      })
+      .then((id) => {
+        toast(
+          <TodoSuccessToast
+            message="Todo added successfully"
+            id={id.toString()}
+          />,
+          { type: "success" },
+        );
+        reset();
+      })
+      .catch(() => {
+        toast("Failed to add todo", { type: "error" });
+      });
   };
 
   const onSubmit: SubmitHandler<TodoFormInputs> = async (data) => {
@@ -74,7 +83,10 @@ export function AddTodoForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-2">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="mx-auto flex flex-col gap-y-2 w-full sm:w-1/2 md:w-1/3"
+    >
       <label htmlFor="title">
         <span className="ml-2">
           Title <span className="text-red-500">*</span>
