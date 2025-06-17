@@ -1,3 +1,4 @@
+import { ListBulletsIcon, PlusCircleIcon } from "@phosphor-icons/react";
 import { NavLink, Outlet } from "react-router";
 import { ToastContainer } from "react-toastify";
 
@@ -5,10 +6,6 @@ export function Layout() {
   return (
     <>
       <nav className="bg-blue-500 text-white flex items-center gap-x-4 p-4 shadow-md">
-        <span className="text-3xl font-bold underline decoration-amber-500">
-          Todo App
-        </span>
-        <span className="text-3xl">|</span>
         <NavLink
           to="/"
           className={({ isActive }) =>
@@ -18,29 +15,32 @@ export function Layout() {
           }
           viewTransition
         >
-          Home
+          Todo App
         </NavLink>
+        <span className="text-3xl">|</span>
         <NavLink
           to="/add"
           className={({ isActive }) =>
             isActive
-              ? "text-2xl font-bold text-amber-500 underline"
-              : "text-2xl font-bold"
+              ? "flex items-center text-2xl font-bold text-amber-500 underline"
+              : "flex items-center text-2xl font-bold"
           }
           viewTransition
         >
-          Add Todo
+          <PlusCircleIcon size={24} />
+          <span>Add</span>
         </NavLink>
         <NavLink
           to="/todos"
           className={({ isActive }) =>
             isActive
-              ? "text-2xl font-bold text-amber-500 underline"
-              : "text-2xl font-bold"
+              ? "flex items-center text-2xl font-bold text-amber-500 underline"
+              : "flex items-center text-2xl font-bold"
           }
           viewTransition
         >
-          Todo List
+          <ListBulletsIcon size={24} />
+          <span>List</span>
         </NavLink>
       </nav>
       <main className="p-4">
